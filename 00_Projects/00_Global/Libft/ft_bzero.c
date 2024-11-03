@@ -1,6 +1,8 @@
-void ft_bzero(void *s, int n)
+#include <stddef.h>
+
+void ft_bzero(void *s, size_t n)
 {
-    int i = 0;
+    size_t i = 0;
     unsigned char *ptr = (unsigned char *)s;
 
     while (i < n)

@@ -6,7 +6,6 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *))
     t_list *new_list = NULL;
     t_list *new_elem;
 
-
     while (lst != NULL)
     {
 
@@ -23,11 +22,7 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *))
             }
             return NULL;
         }
-
-        
         ft_lstadd_back(&new_list, new_elem);
-
-       
         lst = lst->next;
     }
     return new_list;
