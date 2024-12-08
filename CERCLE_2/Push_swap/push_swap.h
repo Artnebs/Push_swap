@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:29:50 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/08 14:12:42 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/08 14:36:56 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ void	print_error(void);
 int	is_valid_input(int ac);
 void	print_stack(t_stack *stack);
 void ft_free_split(char **array);
+void quick_sort(int *array, int low, int high);
+int partition(int *array, int low, int high);
+void sort_array(int *array, int size);
 
 // Validation and Parsing
 int		ft_atoi_safe(const char *str, int *value);

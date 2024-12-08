@@ -6,7 +6,7 @@
 #    By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 10:28:35 by anebbou           #+#    #+#              #
-#    Updated: 2024/12/08 13:26:01 by anebbou          ###   ########.fr        #
+#    Updated: 2024/12/08 14:36:08 by anebbou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT_DIR = Libft_GNL_Printf
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Sources
-SRCS = main.c actions_a.c actions_b.c combined_actions.c parsing.c operations.c sorting_small.c sorting_large.c utils.c utils2.c
+SRCS = main.c actions_a.c actions_b.c combined_actions.c parsing.c operations.c sorting_small.c sorting_large.c sorting_utils.c utils.c utils2.c
 CHECKER_SRCS = checker.cc
 # Objects
 OBJS = $(SRCS:.c=.o)
