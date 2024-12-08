@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:29:50 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/04 11:06:33 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/08 14:12:42 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /* ************************************************************************** */
 /* INCLUDES */
 /* ************************************************************************** */
-# include "libft.h"
-# include "ft_printf.h"
+# include "Libft_GNL_Printf/includes/libft.h"
+# include "Libft_GNL_Printf/includes/ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -46,20 +46,46 @@ typedef struct s_stack
 /* PROTOTYPES */
 /* ************************************************************************** */
 
+//Operations
+void	swap(t_stack *stack);
+void	push(t_stack *src, t_stack *dest);
+void	rotate(t_stack *stack);
+void	reverse_rotate(t_stack *stack);
+
+// Stack Operations
 t_stack	*init_stack(void);
-void	free_stack(t_stack *stack);
-int	is_sorted(t_stack *stack);
 void	push_bottom(t_stack *stack, int value);
+void	pa(t_stack *stack_b, t_stack *stack_a);
+void	pb(t_stack *stack_a, t_stack *stack_b);
+void	ra(t_stack *stack);
+void	rra(t_stack *stack);
+void	sa(t_stack *stack_a);
+void	sb(t_stack *stack_b);
+
+// Sorting Functions
+void	sort_five(t_stack *stack_a, t_stack *stack_b);
+void	sort_three(t_stack *stack_a);
+
+// Utility Functions
+void	print_stack(t_stack *stack);
+int		get_smallest(t_stack *stack);
+int	get_position(t_stack *stack, int value);
+void	push_smallest_to_b(t_stack *stack_a, t_stack *stack_b);
+void	print_error(void);
+int	is_valid_input(int ac);
+void	print_stack(t_stack *stack);
+void ft_free_split(char **array);
+
+// Validation and Parsing
+int		ft_atoi_safe(const char *str, int *value);
+int		is_valid_integer(const char *str);
+int	populate_stack(t_stack *stack, char **values);
+
+// Error Handling
+t_stack	*handle_error(t_stack *stack, char **values, int split);
 
 /* ************************************************************************** */
 /* BONUS (Pour une éventuelle extension) */
 /* ************************************************************************** */
-
-
-
-/* ************************************************************************** */
-/* DEBUG */
-/* ************************************************************************** */
-
 
 #endif

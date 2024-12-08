@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:53 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/04 11:57:17 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/08 13:17:15 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_stack(t_stack *stack)
 	free(stack);
 }
 
+//add value to bottom of stack
 void	push_bottom(t_stack *stack, int value)
 {
 	t_node	*new_node;
@@ -75,6 +76,7 @@ int	is_sorted(t_stack *stack)
 	return (1);
 }
 
+//atoi with error handling
 int	ft_atoi_safe(const char *str, int *value)
 {
 	long	result;

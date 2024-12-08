@@ -6,13 +6,13 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:04 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/04 12:29:13 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/08 13:27:55 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int is_valid_integer(const char *str)
+int is_valid_integer(const char *str)
 {
 	int i;
 
@@ -30,7 +30,7 @@ static int is_valid_integer(const char *str)
 	return (1);
 }
 
-static int	has_duplicates(t_stack *stack)
+int	has_duplicates(t_stack *stack)
 {
 	t_node	*current;
 	t_node	*checker;
@@ -50,7 +50,7 @@ static int	has_duplicates(t_stack *stack)
 	return (0);
 }
 
-static t_stack	*handle_error(t_stack *stack, char **values, int split)
+t_stack	*handle_error(t_stack *stack, char **values, int split)
 {
 	if (split)
 		ft_free_split(values);
@@ -59,7 +59,7 @@ static t_stack	*handle_error(t_stack *stack, char **values, int split)
 	return (NULL);
 }
 
-static int	populate_stack(t_stack *stack, char **values)
+int	populate_stack(t_stack *stack, char **values)
 {
 	int	value;
 	int	i;
@@ -79,13 +79,10 @@ t_stack	*parse_arguments(int ac, char **av)
 {
 	t_stack	*stack;
 	char	**values;
-	int	value;
-	int	i;
 
 	stack = init_stack();
 	if (!stack)
 		return (NULL);
-	i = 0;
 	if (ac == 2)
 		values = ft_split(av[1], ' ');
 	else
@@ -97,6 +94,6 @@ t_stack	*parse_arguments(int ac, char **av)
 	if (ac == 2)
 		ft_free_split(values);
 	if (has_duplicates(stack))
-		return (handle_error(stack, NULL, 0))
+		return (handle_error(stack, NULL, 0));
 	return (stack);
 }

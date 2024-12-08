@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:18 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/04 13:19:36 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/08 11:48:38 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	push(t_stack *src, t_stack *dest)
 		src->bottom = NULL;
 	node->next = dest->top;
 	if (dest->top)
-		dest->top->previous = node;
+		dest->top->prev = node;
 	dest->top = node;
 	if(dest->size == 0)
 		dest->bottom = node;

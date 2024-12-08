@@ -1,38 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions_b.c                                        :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:19:48 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/08 13:34:49 by anebbou          ###   ########.fr       */
+/*   Created: 2024/12/08 12:48:05 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/08 14:11:59 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//swap first 2 elements of B
-void sb(t_stack *stack_b)
+void	print_error(void)
 {
-	swap(stack_b);
+	ft_putstr_fd("Error\n", 2);
+}
+int	is_valid_input(int ac)
+{
+	if (ac < 2)
+		return (0);
+	return (1);
 }
 
-//push from A to B
-void	pb(t_stack *stack_a, t_stack *stack_b)
+void	print_stack(t_stack *stack)
 {
-	push(stack_a, stack_b);
-}
+	t_node	*current;
 
-//rotate B top -> bottom
-void	rb(t_stack *stack_b)
-{
-	rotate(stack_b);
+	current = stack->top;
+	while (current)
+	{
+		ft_printf("%d ", current->value);
+		current = current->next;
+	}
+	ft_printf("\n");
 }
-
-//rotate B bottom -> top
-void	rrb(t_stack *stack_b)
+void ft_free_split(char **array)
 {
-	reverse_rotate(stack_b);
+	int i = 0;
+
+	if (!array)
+		return;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }
 
