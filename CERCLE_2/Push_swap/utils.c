@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:53 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/08 13:17:15 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/09 12:41:58 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,16 @@ int	ft_atoi_safe(const char *str, int *value)
 	}
 	*value = (int)(result * sign);
 	return (1);
+}
+
+void	restore_original_values(t_stack *stack, int offset)
+{
+	t_node	*current;
+	
+	current = stack->top;
+	while (current)
+	{
+		current->value -= offset;
+		current = current->next;
+	}
 }

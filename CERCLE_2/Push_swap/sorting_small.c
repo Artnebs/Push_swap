@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:32 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/08 14:02:21 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/09 12:37:01 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,14 @@ void sort_five(t_stack *stack_a, t_stack *stack_b)
 		pa(stack_b, stack_a); // Push everything back to stack_a
 }
 
+void	quick_sort(int *array, int low, int high)
+{
+	int pivot_index;
+	
+	if (low < high)
+	{
+		pivot_index = partition(array, low, high);
+		quick_sort(array, low, pivot_index - 1);
+		quick_sort(array, pivot_index + 1, high);
+	}
+}
