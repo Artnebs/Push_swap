@@ -6,66 +6,61 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:23:57 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/09 21:23:59 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 16:28:19 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_bottom(t_stack *stack, int value)
+// Add a new node with the specified value to the bottom of the stack
+void push_bottom(t_stack *stack, int value)
 {
-	t_node *new = malloc(sizeof(t_node));
-	if (!new)
-		return;
-	new->value = value;
-	new->next = NULL;
-	new->prev = stack->bottom;
-	if (stack->bottom)
-		stack->bottom->next = new;
-	else
-		stack->top = new;
-	stack->bottom = new;
-	stack->size++;
+    printf("Adding value %d to bottom of stack (current size=%d)...\n", value, stack->size);
+
+    t_node *new_node = malloc(sizeof(t_node));
+    if (!new_node)
+    {
+        fprintf(stderr, "Error: Failed to allocate memory for new node\n");
+        return;
+    }
+
+    new_node->value = value;
+    new_node->next = NULL;
+    new_node->prev = stack->bottom;
+
+    if (stack->bottom)
+        stack->bottom->next = new_node;
+    else
+        stack->top = new_node;
+
+    stack->bottom = new_node;
+    stack->size++;
+
+    printf("Added value %d to stack. New size: %d\n", value, stack->size);
 }
 
-int	is_sorted(t_stack *stack)
+
+/*
+ * get_smallest:
+ * Finds and returns the smallest value in the stack.
+ */
+int get_smallest(t_stack *stack)
 {
-	t_node *c;
-	if (stack->size < 2)
-		return (1);
-	c = stack->top;
-	while (c->next)
-	{
-		if (c->value > c->next->value)
-			return (0);
-		c = c->next;
-	}
-	return (1);
+    t_node *current_node;
+    int smallest_value;
+
+    if (!stack || stack->size == 0)
+        return (0);
+
+    current_node = stack->top;
+    smallest_value = current_node->value;
+
+    while (current_node)
+    {
+        if (current_node->value < smallest_value)
+            smallest_value = current_node->value;
+        current_node = current_node->next;
+    }
+    return (smallest_value);
 }
 
-int	get_smallest(t_stack *stack)
-{
-	t_node *c = stack->top;
-	int small = c->value;
-	while (c)
-	{
-		if (c->value < small)
-			small = c->value;
-		c = c->next;
-	}
-	return (small);
-}
-
-int	get_position(t_stack *stack, int value)
-{
-	t_node *c = stack->top;
-	int pos = 0;
-	while (c)
-	{
-		if (c->value == value)
-			return (pos);
-		pos++;
-		c = c->next;
-	}
-	return (-1);
-}

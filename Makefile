@@ -6,7 +6,7 @@
 #    By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 10:28:35 by anebbou           #+#    #+#              #
-#    Updated: 2024/12/09 21:43:22 by anebbou          ###   ########.fr        #
+#    Updated: 2024/12/12 15:07:41 by anebbou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT_DIR = Libft_GNL_Printf
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # Sources
-SRCS = main.c parsing.c stack_init.c stack_utils.c operations.c actions.c \
+SRCS = main.c push_swap.c parsing.c stack_init.c stack_utils.c operations.c actions.c \
        sorting_small.c median_sort.c partition_stack.c merge_stacks.c \
        cost_moves.c find_median.c insert_position.c rotations_calc.c utils.c
 CHECKER_SRCS = checker.c

@@ -6,60 +6,68 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:26:39 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/09 21:26:41 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:43:52 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	do_rr(t_stack *a, t_stack *b, int *ra_c, int *rb_c)
+// Perform simultaneous rotations (rr or rrr) to minimize total moves
+static void	do_rr(t_stack *stack_a, t_stack *stack_b, int *rotation_a_count, int *rotation_b_count)
 {
-	while (*ra_c > 0 && *rb_c > 0)
+	while (*rotation_a_count > 0 && *rotation_b_count > 0)
 	{
-		rr(a,b);
-		(*ra_c)--;
-		(*rb_c)--;
+		rr(stack_a, stack_b);
+		(*rotation_a_count)--;
+		(*rotation_b_count)--;
 	}
-	while (*ra_c < 0 && *rb_c < 0)
+	while (*rotation_a_count < 0 && *rotation_b_count < 0)
 	{
-		rrr(a,b);
-		(*ra_c)++;
-		(*rb_c)++;
+		rrr(stack_a, stack_b);
+		(*rotation_a_count)++;
+		(*rotation_b_count)++;
 	}
 }
 
-static void	do_rotations(t_stack *a, t_stack *b, int *ra_c, int *rb_c)
+// Perform independent rotations for each stack after simultaneous rotations
+static void	do_rotations(t_stack *stack_a, t_stack *stack_b, int *rotation_a_count, int *rotation_b_count)
 {
-	while (*ra_c > 0)
+	while (*rotation_a_count > 0)
 	{
-		ra(a);
-		(*ra_c)--;
+		ra(stack_a);
+		(*rotation_a_count)--;
 	}
-	while (*ra_c < 0)
+	while (*rotation_a_count < 0)
 	{
-		rra(a);
-		(*ra_c)++;
+		rra(stack_a);
+		(*rotation_a_count)++;
 	}
-	while (*rb_c > 0)
+	while (*rotation_b_count > 0)
 	{
-		rb(b);
-		(*rb_c)--;
+		rb(stack_b);
+		(*rotation_b_count)--;
 	}
-	while (*rb_c < 0)
+	while (*rotation_b_count < 0)
 	{
-		rrb(b);
-		(*rb_c)++;
+		rrb(stack_b);
+		(*rotation_b_count)++;
 	}
 }
 
-void	move_with_min_cost(t_stack *a, t_stack *b, int target_value)
+// Move target_value from stack_b to its correct position in stack_a with minimal cost
+void	move_with_min_cost(t_stack *stack_a, t_stack *stack_b, int target_value)
 {
-	int pos_a = get_insert_position(a, target_value);
-	int pos_b = get_position(b, target_value);
-	int ra_c = calc_rotations_for_a(a, pos_a);
-	int rb_c = calc_rotations_for_b(b, pos_b);
+	if (!stack_a || !stack_b || stack_b->size == 0)
+		return;
 
-	do_rr(a,b,&ra_c,&rb_c);
-	do_rotations(a,b,&ra_c,&rb_c);
-	pa(b,a);
+	int insert_position_a = get_insert_position(stack_a, target_value);
+	int position_b = get_position(stack_b, target_value);
+
+	int rotation_a_count = calc_rotations_for_a(stack_a, insert_position_a);
+	int rotation_b_count = calc_rotations_for_b(stack_b, position_b);
+
+	do_rr(stack_a, stack_b, &rotation_a_count, &rotation_b_count);
+	do_rotations(stack_a, stack_b, &rotation_a_count, &rotation_b_count);
+
+	pa(stack_b, stack_a);
 }

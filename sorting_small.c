@@ -6,47 +6,49 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:24:56 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/09 21:24:58 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 14:23:46 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(t_stack *a)
+void sort_three(t_stack *stack_a)
 {
-	int v1 = a->top->value;
-	int v2 = a->top->next->value;
-	int v3 = a->bottom->value;
+    if (stack_a->size < 3)
+        return;
 
-	if (v1 > v2 && v1 < v3)
-		sa(a);
-	else if (v1 > v2 && v2 > v3)
-	{ sa(a); rra(a); }
-	else if (v1 > v3 && v2 < v3)
-		ra(a);
-	else if (v1 < v2 && v1 < v3 && v2 > v3)
-	{ sa(a); ra(a); }
-	else if (v1 < v2 && v2 > v3 && v1 > v3)
-		rra(a);
+    int v1 = stack_a->top->value;
+    int v2 = stack_a->top->next->value;
+    int v3 = stack_a->bottom->value;
+
+    if (v1 > v2 && v1 > v3)
+        ra(stack_a);
+    if (v1 > v2 && v2 > v3)
+        sa(stack_a);
+    if (v1 < v2 && v2 > v3 && v1 < v3)
+    {
+        sa(stack_a);
+        ra(stack_a);
+    }
+    if (v1 < v3 && v2 > v3)
+        rra(stack_a);
 }
 
-void	sort_five(t_stack *a, t_stack *b)
+void sort_five(t_stack *stack_a, t_stack *stack_b)
 {
-	int sm;
-
-	while (a->size > 3)
-	{
-		sm = get_smallest(a);
-		while (a->top->value != sm)
-		{
-			if (get_position(a, sm) < a->size / 2)
-				ra(a);
-			else
-				rra(a);
-		}
-		pb(a, b);
-	}
-	sort_three(a);
-	while (b->size > 0)
-		pa(b, a);
+    while (stack_a->size > 3)
+    {
+        int smallest = get_smallest(stack_a);
+        while (stack_a->top->value != smallest)
+        {
+            if (get_position(stack_a, smallest) < stack_a->size / 2)
+                ra(stack_a);
+            else
+                rra(stack_a);
+        }
+        pb(stack_a, stack_b);
+    }
+    sort_three(stack_a);
+    while (stack_b->size > 0)
+        pa(stack_b, stack_a);
 }

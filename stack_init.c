@@ -6,36 +6,44 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:23:40 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/09 21:23:43 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:36:41 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+#include <stdlib.h>
+#include "push_swap.h"
+
+// Initialize a stack and set default values
 t_stack	*init_stack(void)
 {
-	t_stack *st = malloc(sizeof(t_stack));
-	if (!st)
+	t_stack *stack;
+
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
 		return (NULL);
-	st->top = NULL;
-	st->bottom = NULL;
-	st->size = 0;
-	return (st);
+	stack->top = NULL;
+	stack->bottom = NULL;
+	stack->size = 0;
+	return (stack);
 }
 
+// Free all nodes in the stack and the stack itself
 void	free_stack(t_stack *stack)
 {
-	t_node *c;
-	t_node *n;
+	t_node *current_node;
+	t_node *next_node;
 
 	if (!stack)
 		return;
-	c = stack->top;
-	while (c)
+	current_node = stack->top;
+	while (current_node)
 	{
-		n = c->next;
-		free(c);
-		c = n;
+		next_node = current_node->next;
+		free(current_node);
+		current_node = next_node;
 	}
 	free(stack);
 }
+
