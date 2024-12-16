@@ -6,68 +6,59 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:27:35 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/12 16:43:08 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 19:00:37 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* insert_position.c */
 #include "push_swap.h"
-/*
- * get_insert_position:
- * Determines the position in stack A where `target_value` should be inserted
- * to maintain the ascending order.
- */
+
+int get_position(t_stack *stack, int value)
+{
+	t_node *current_node;
+	int position;
+
+	if (!stack || stack->size == 0)
+		return (-1);
+	position = 0;
+	current_node = stack->top;
+	while (current_node)
+	{
+		if (current_node->value == value)
+			return (position);
+		position++;
+		current_node = current_node->next;
+	}
+	return (-1);
+}
+
 int get_insert_position(t_stack *a, int target_value)
 {
-    printf("Checking insert position for %d\n", target_value);
+    t_node *current;
+    int position;
 
-    if (is_sorted(a))  // If the stack is sorted
+    if (!a || a->size == 0)
+        return (0);
+
+    position = 0;
+    current = a->top;
+
+    while (current)
     {
-        printf("Stack is sorted, using binary search.\n");
-        return binary_search(a, target_value);  // Use binary search for sorted stacks
-    }
+        // Case 1: Target fits between two nodes
+        if (current->value > target_value && 
+           (!current->next || current->next->value < target_value))
+            return (position);
 
-    // For unsorted stacks, traverse to find the correct position
-    printf("Stack is unsorted, using linear search.\n");
-    t_node *current_node = a->top;
-    int position = 0;
+        // Case 2: Wrap-around at the end
+        if (current->value < a->top->value && target_value < current->value)
+            return (position);
 
-    // Traverse the stack to find the insert position
-    while (current_node)
-    {
-        if (current_node->value > target_value)  // Find the first element larger than the target
-        {
-            printf("Insert position found at %d\n", position);
-            return position;
-        }
         position++;
-        current_node = current_node->next;
+        current = current->next;
     }
 
-    // If target_value is larger than all elements, insert at the end
-    printf("Inserting at the end, position %d\n", position);
+    // Case 3: If we get here, the target fits at the bottom
     return position;
 }
 
-/*
- * get_position:
- * Returns the position (0-indexed) of a specific `value` in the stack.
- * If the value is not found, returns -1.
- */
-int get_position(t_stack *stack, int value)
-{
-    t_node *current_node;
-    int position = 0;
-
-    if (!stack || stack->size == 0)
-        return (-1);
-
-    current_node = stack->top;
-    while (current_node)
-    {
-        if (current_node->value == value)
-            return (position);
-        position++;
-        current_node = current_node->next;
-    }
-    return (-1);
-}

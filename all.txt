@@ -1,0 +1,1070 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    all.txt                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/12/09 21:24:22 by anebbou           #+#    #+#              #
+#    Updated: 2024/12/12 21:18:33 by anebbou          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+/* actions.c */
+#include "push_swap.h"
+#include <unistd.h>
+
+void	sa(t_stack *stack_a)
+{
+	swap(stack_a);
+	ft_putstr_fd("sa\n", 1);
+}
+
+void	sb(t_stack *stack_b)
+{
+	swap(stack_b);
+	ft_putstr_fd("sb\n", 1);
+}
+
+void	ss(t_stack *stack_a, t_stack *stack_b)
+{
+	swap(stack_a);
+	swap(stack_b);
+	ft_putstr_fd("ss\n", 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 17:03:52 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:03:57 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* actions2.c */
+#include "push_swap.h"
+#include <unistd.h>
+
+void	pa(t_stack *stack_b, t_stack *stack_a)
+{
+	push(stack_b, stack_a);
+	ft_putstr_fd("pa\n", 1);
+}
+
+void	pb(t_stack *stack_a, t_stack *stack_b)
+{
+	push(stack_a, stack_b);
+	ft_putstr_fd("pb\n", 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions3.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 17:04:08 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:04:10 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* actions3.c */
+#include "push_swap.h"
+#include <unistd.h>
+
+void	ra(t_stack *stack_a)
+{
+	rotate(stack_a);
+	ft_putstr_fd("ra\n", 1);
+}
+
+void	rb(t_stack *stack_b)
+{
+	rotate(stack_b);
+	ft_putstr_fd("rb\n", 1);
+}
+
+void	rr(t_stack *stack_a, t_stack *stack_b)
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	ft_putstr_fd("rr\n", 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions4.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 17:04:37 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:04:39 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* actions4.c */
+#include "push_swap.h"
+#include <unistd.h>
+
+void	rra(t_stack *stack_a)
+{
+	reverse_rotate(stack_a);
+	ft_putstr_fd("rra\n", 1);
+}
+
+void	rrb(t_stack *stack_b)
+{
+	reverse_rotate(stack_b);
+	ft_putstr_fd("rrb\n", 1);
+}
+
+void	rrr(t_stack *stack_a, t_stack *stack_b)
+{
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);
+	ft_putstr_fd("rrr\n", 1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cost_moves.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:26:39 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 20:48:55 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* cost_moves.c */
+#include "push_swap.h"
+
+static void do_rr(t_stack *stack_a, t_stack *stack_b, int *rotation_a_count, int *rotation_b_count)
+{
+    printf("Initial Rotations: A: %d, B: %d\n", *rotation_a_count, *rotation_b_count);
+
+    while (*rotation_a_count > 0 && *rotation_b_count > 0)
+    {
+        rr(stack_a, stack_b);
+        *rotation_a_count = *rotation_a_count - 1;
+        *rotation_b_count = *rotation_b_count - 1;
+    }
+    while (*rotation_a_count < 0 && *rotation_b_count < 0)
+    {
+        rrr(stack_a, stack_b);
+        *rotation_a_count = *rotation_a_count + 1;
+        *rotation_b_count = *rotation_b_count + 1;
+    }
+
+    printf("After do_rr: Rotations Remaining A: %d, B: %d\n", *rotation_a_count, *rotation_b_count);
+}
+
+
+static void do_rotations(t_stack *stack_a, t_stack *stack_b, int *rotation_a_count, int *rotation_b_count)
+{
+    printf("Remaining Rotations Before Individual Operations: A: %d, B: %d\n", *rotation_a_count, *rotation_b_count);
+
+    while (*rotation_a_count > 0)
+    {
+        ra(stack_a);
+        *rotation_a_count = *rotation_a_count - 1;
+    }
+    while (*rotation_a_count < 0)
+    {
+        rra(stack_a);
+        *rotation_a_count = *rotation_a_count + 1;
+    }
+    while (*rotation_b_count > 0)
+    {
+        rb(stack_b);
+        *rotation_b_count = *rotation_b_count - 1;
+    }
+    while (*rotation_b_count < 0)
+    {
+        rrb(stack_b);
+        *rotation_b_count = *rotation_b_count + 1;
+    }
+
+    printf("After Individual Rotations: A: %d, B: %d\n", *rotation_a_count, *rotation_b_count);
+}
+
+
+void move_with_min_cost(t_stack *stack_a, t_stack *stack_b, int target_value)
+{
+    if (!stack_a || !stack_b || stack_b->size == 0)
+        return;
+
+    int insert_position_a = get_insert_position(stack_a, target_value);
+    int position_b = get_position(stack_b, target_value);
+    int rotation_a_count = calc_rotations_for_a(stack_a, insert_position_a);
+    int rotation_b_count = calc_rotations_for_b(stack_b, position_b);
+
+    printf("Target: %d, Insert Position A: %d, Position B: %d\n", target_value, insert_position_a, position_b);
+    printf("Initial Rotations A: %d, B: %d\n", rotation_a_count, rotation_b_count);
+
+    do_rr(stack_a, stack_b, &rotation_a_count, &rotation_b_count);
+    do_rotations(stack_a, stack_b, &rotation_a_count, &rotation_b_count);
+
+    printf("After Rotations: A Size: %d, B Size: %d\n", stack_a->size, stack_b->size);
+
+    if (stack_b->size > 0)
+        pa(stack_b, stack_a);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   insert_position.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:27:35 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 19:00:37 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* insert_position.c */
+#include "push_swap.h"
+
+int get_position(t_stack *stack, int value)
+{
+	t_node *current_node;
+	int position;
+
+	if (!stack || stack->size == 0)
+		return (-1);
+	position = 0;
+	current_node = stack->top;
+	while (current_node)
+	{
+		if (current_node->value == value)
+			return (position);
+		position++;
+		current_node = current_node->next;
+	}
+	return (-1);
+}
+
+int get_insert_position(t_stack *a, int target_value)
+{
+    t_node *current;
+    int position;
+
+    if (!a || a->size == 0)
+        return (0);
+
+    position = 0;
+    current = a->top;
+
+    while (current)
+    {
+        // Case 1: Target fits between two nodes
+        if (current->value > target_value && 
+           (!current->next || current->next->value < target_value))
+            return (position);
+
+        // Case 2: Wrap-around at the end
+        if (current->value < a->top->value && target_value < current->value)
+            return (position);
+
+        position++;
+        current = current->next;
+    }
+
+    // Case 3: If we get here, the target fits at the bottom
+    return position;
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   median_sort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:25:25 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 21:07:57 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+#include <stdlib.h>
+
+static void copy_stack_to_array(int *values, t_stack *stack)
+{
+	t_node *current;
+	int index;
+
+	current = stack->top;
+	index = 0;
+	while (current)
+	{
+		values[index] = current->value;
+		current = current->next;
+		index++;
+	}
+}
+
+static void quick_sort(int *array, int low, int high)
+{
+	int pivot, i, j, temp;
+
+	if (low >= high)
+		return;
+	pivot = array[high];
+	i = low - 1;
+	j = low;
+	while (j < high)
+	{
+		if (array[j] < pivot)
+		{
+			i++;
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		j++;
+	}
+	temp = array[i + 1];
+	array[i + 1] = array[high];
+	array[high] = temp;
+	quick_sort(array, low, i);
+	quick_sort(array, i + 2, high);
+}
+
+int find_median(t_stack *stack)
+{
+    if (!stack || stack->size == 0)
+        return (-1);
+
+    int *values = malloc(sizeof(int) * stack->size);
+    if (!values)
+        return (-1);
+
+    // Copy stack values into an array
+    copy_stack_to_array(values, stack);
+
+    // Sort the array
+    quick_sort(values, 0, stack->size - 1);
+
+    // Find the median
+    int median = values[stack->size / 2];
+    free(values); // Free allocated memory
+
+    return median;
+}
+
+int find_median_for_chunk(t_stack *stack, int median, int is_upper)
+{
+    int *values;
+    int chunk_size = 0;
+    int i = 0;
+    t_node *current = stack->top;
+
+    // Count values in the chunk
+    while (current)
+    {
+        if ((is_upper && current->value >= median) || (!is_upper && current->value < median))
+            chunk_size++;
+        current = current->next;
+    }
+
+    if (chunk_size == 0) // No values in the chunk
+        return median;
+
+    // Allocate memory for the chunk values
+    values = malloc(sizeof(int) * chunk_size);
+    if (!values)
+        return median;
+
+    // Collect values in the chunk
+    current = stack->top;
+    while (current)
+    {
+        if ((is_upper && current->value >= median) || (!is_upper && current->value < median))
+            values[i++] = current->value;
+        current = current->next;
+    }
+
+    // Sort the chunk
+    quick_sort(values, 0, chunk_size - 1);
+
+    // Find and return the median
+    int chunk_median = values[chunk_size / 2];
+    free(values);
+    return chunk_median;
+}
+
+void quick_median_sort(t_stack *stack_a, t_stack *stack_b)
+{
+    if (!stack_a || !stack_b)
+        return;
+
+    printf("Quick Median Sort: Stack A Size = %d, Stack B Size = %d\n", stack_a->size, stack_b->size);
+
+    if (stack_a->size <= 3)
+    {
+        sort_three(stack_a);
+        return;
+    }
+
+    if (stack_a->size <= 5)
+    {
+        sort_five(stack_a, stack_b);
+        return;
+    }
+
+    partition_stack(stack_a, stack_b, stack_a->size);
+
+    while (stack_b->size > 0)
+    {
+        printf("Merging: Stack B Top = %d\n", stack_b->top->value);
+        move_with_min_cost(stack_a, stack_b, stack_b->top->value);
+    }
+
+    if (!is_sorted(stack_a)) // Ensure the final stack is sorted
+        sort_three(stack_a);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge_stacks.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:11:51 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:08:58 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+// Merges the elements from stack B into stack A by moving the top element of stack B
+// to its correct position in stack A with minimal cost
+void merge_stacks(t_stack *stack_a, t_stack *stack_b)
+{
+    int target_value;
+
+    if (stack_b->size == 0)
+        return;
+
+    // Get the value to be moved from stack B to stack A
+    target_value = stack_b->top->value;
+
+    // Move the target value from stack B to stack A with minimal cost
+    move_with_min_cost(stack_a, stack_b, target_value);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operations.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:24:12 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:03:10 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* operations.c */
+#include "push_swap.h"
+
+void	swap(t_stack *stack)
+{
+	t_node *first;
+	t_node *second;
+
+	if (!stack || stack->size < 2)
+		return;
+	first = stack->top;
+	second = first->next;
+	first->next = second->next;
+	if (second->next)
+		second->next->prev = first;
+	second->prev = NULL;
+	second->next = first;
+	first->prev = second;
+	stack->top = second;
+	if (stack->size == 2)
+		stack->bottom = first;
+}
+
+void	push(t_stack *src, t_stack *dest)
+{
+	t_node *node_to_move;
+
+	if (!src || src->size == 0)
+		return;
+	node_to_move = src->top;
+	src->top = node_to_move->next;
+	if (src->top)
+		src->top->prev = NULL;
+	else
+		src->bottom = NULL;
+	node_to_move->next = dest->top;
+	if (dest->top)
+		dest->top->prev = node_to_move;
+	else
+		dest->bottom = node_to_move;
+	dest->top = node_to_move;
+	src->size--;
+	dest->size++;
+}
+
+void rotate(t_stack *stack)
+{
+	t_node *top_node;
+	t_node *bottom_node;
+
+	if (!stack || stack->size < 2)
+		return;
+	top_node = stack->top;
+	bottom_node = stack->bottom;
+	stack->top = top_node->next;
+	stack->top->prev = NULL;
+	bottom_node->next = top_node;
+	top_node->prev = bottom_node;
+	top_node->next = NULL;
+	stack->bottom = top_node;
+}
+
+void reverse_rotate(t_stack *stack)
+{
+	t_node *top_node;
+	t_node *bottom_node;
+
+	if (!stack || stack->size < 2)
+		return;
+	top_node = stack->top;
+	bottom_node = stack->bottom;
+	stack->bottom = bottom_node->prev;
+	stack->bottom->next = NULL;
+	bottom_node->prev = NULL;
+	bottom_node->next = top_node;
+	top_node->prev = bottom_node;
+	stack->top = bottom_node;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 10:30:04 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 18:54:55 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* parsing.c */
+#include "push_swap.h"
+
+#include <stdio.h> // Include for debugging
+
+static int	ft_atoi_safe(const char *input, int *output)
+{
+	long	result;
+	int		sign;
+
+	// Skip leading spaces
+	while (*input == ' ' || *input == '\t' || *input == '\n' ||
+		   *input == '\v' || *input == '\f' || *input == '\r')
+		input++;
+
+	result = 0;
+	sign = 1;
+
+	// Handle sign
+	if (*input == '-' || *input == '+')
+	{
+		if (*input == '-')
+			sign = -1;
+		input++;
+	}
+
+	// Check if the input is empty after handling spaces and signs
+	if (!*input)
+	{
+		fprintf(stderr, "Error: Input is empty or invalid\n");
+		return (0);
+	}
+
+	// Process the number
+	while (*input)
+	{
+		if (!ft_isdigit(*input)) // Validate character is a digit
+		{
+			fprintf(stderr, "Error: Non-numeric character encountered\n");
+			return (0);
+		}
+
+		result = result * 10 + (*input - '0');
+
+		// Check for overflow or underflow
+		if ((result * sign) > 2147483647 || (result * sign) < -2147483648)
+		{
+			fprintf(stderr, "Error: Integer overflow or underflow\n");
+			return (0);
+		}
+
+		input++;
+	}
+
+	*output = (int)(result * sign);
+	return (1);
+}
+
+static int	has_duplicates(t_stack *stack)
+{
+	int		hash_table[2000001];
+	int		index;
+	t_node	*current_node;
+	int		i;
+
+	i = 0;
+	while (i < 2000001)
+	{
+		hash_table[i] = 0;
+		i++;
+	}
+	current_node = stack->top;
+	while (current_node)
+	{
+		index = current_node->value + 1000000;
+		if (hash_table[index] != 0)
+			return (1);
+		hash_table[index] = 1;
+		current_node = current_node->next;
+	}
+	return (0);
+}
+
+static int	populate_stack(t_stack *stack, char **string_values)
+{
+	int current_value;
+	int i;
+
+	i = 0;
+	while (string_values[i])
+	{
+		// Validate and convert the current string to an integer
+		if (!ft_atoi_safe(string_values[i], &current_value))
+		{
+			ft_putstr_fd("Error: Invalid number\n", 2);
+			free_stack(stack); // Free the partially filled stack
+			return (0);
+		}
+
+		// Add the validated number to the stack
+		push_bottom(stack, current_value);
+		i++;
+	}
+
+	return (1);
+}
+
+
+t_stack	*parse_arguments(int argc, char **argv)
+{
+	t_stack	*stack;
+	char	**values;
+
+	// Check if there are enough arguments
+	if (argc < 2)
+	{
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
+	}
+
+	stack = init_stack();
+	if (!stack)
+		return (NULL);
+
+	// Handle single string input (e.g., "./push_swap '1 2 3'")
+	if (argc == 2)
+		values = ft_split(argv[1], ' ');
+	else
+		values = &argv[1];
+
+	// Validate and populate the stack
+	if ((argc == 2 && !values) || !populate_stack(stack, values))
+	{
+		if (argc == 2)
+			ft_free_split(values); // Free split result if it was allocated
+		free_stack(stack);
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
+	}
+
+	// Free split result if it was allocated
+	if (argc == 2)
+		ft_free_split(values);
+
+	// Check for duplicates
+	if (has_duplicates(stack))
+	{
+		free_stack(stack);
+		ft_putstr_fd("Error\n", 2);
+		return (NULL);
+	}
+
+	return (stack);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   partition_stack.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:10:31 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 21:07:42 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void partition_stack(t_stack *stack_a, t_stack *stack_b, int size)
+{
+    if (size <= 3)
+    {
+        // Base case: Small stack sizes handled directly
+        if (size == 2 && stack_a->top->value > stack_a->top->next->value)
+            sa(stack_a);
+        else if (size == 3)
+            sort_three(stack_a);
+        return;
+    }
+
+    int median = find_median_for_chunk(stack_a, find_median(stack_a), 1); // Calculate the median for the chunk
+    int count = size;
+    int pushed = 0;
+
+    while (count > 0 && stack_a->size > 0) // Partition the stack
+    {
+        if (stack_a->top->value < median)
+        {
+            pb(stack_a, stack_b);
+            pushed++;
+        }
+        else
+        {
+            ra(stack_a);
+        }
+        count--;
+    }
+
+    // Debugging logs
+    printf("Partitioning Complete: Pushed = %d, Remaining Size = %d\n", pushed, size - pushed);
+
+    // Recursive calls to partition smaller chunks
+    if (pushed > 0 && stack_b->size > 0) // Only partition stack_b if elements were pushed
+        partition_stack(stack_b, stack_a, pushed);
+
+    if (stack_a->size > 0) // Partition remaining elements in stack_a
+        partition_stack(stack_a, stack_b, size - pushed);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 15:03:38 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 20:16:41 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+void push_swap(t_stack *stack_a, t_stack *stack_b)
+{
+    if (is_sorted(stack_a)) // Check if the stack is already sorted
+        return;
+
+    // Special handling for small stacks
+    if (stack_a->size <= 3)
+    {
+        sort_three(stack_a);
+        return;
+    }
+    if (stack_a->size <= 5)
+    {
+        sort_five(stack_a, stack_b);
+        return;
+    }
+
+    // Use the updated partition_stack without passing the median explicitly
+    partition_stack(stack_a, stack_b, stack_a->size);
+
+    // Push elements back from Stack B to Stack A with minimal cost
+    while (stack_b->size > 0)
+    {
+        int target_value = stack_b->top->value;
+        move_with_min_cost(stack_a, stack_b, target_value);
+    }
+
+    // Ensure the final stack is sorted
+    if (!is_sorted(stack_a))
+        sort_three(stack_a);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotations_calc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:27:56 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 19:00:59 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* rotations_calc.c */
+#include "push_swap.h"
+
+int calc_rotations_for_a(t_stack *a, int position)
+{
+    if (!a || position < 0 || position >= a->size)
+    {
+        ft_putstr_fd("Error: Invalid position for rotations in A\n", 2);
+        return (0);
+    }
+
+    // Debugging log
+    ft_printf("Calculating rotations for A: Position = %d, Size = %d\n", position, a->size);
+
+    if (position <= a->size / 2)
+        return (position);
+    else
+        return (position - a->size);
+}
+
+int calc_rotations_for_b(t_stack *b, int position)
+{
+    if (!b || position < 0 || position >= b->size)
+    {
+        ft_putstr_fd("Error: Invalid position for rotations in B\n", 2);
+        return (0);
+    }
+
+    // Debugging log
+    ft_printf("Calculating rotations for B: Position = %d, Size = %d\n", position, b->size);
+
+    if (position <= b->size / 2)
+        return (position);
+    else
+        return (position - b->size);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sorting_small.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:24:56 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 19:17:00 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* sorting_small.c */
+#include "push_swap.h"
+
+void sort_three(t_stack *stack_a)
+{
+    int v1, v2, v3;
+
+    if (stack_a->size < 3)
+        return;
+    v1 = stack_a->top->value;
+    v2 = stack_a->top->next->value;
+    v3 = stack_a->bottom->value;
+
+    if (v1 > v2 && v2 < v3 && v1 < v3) // 2 1 3 -> sa
+        sa(stack_a);
+    else if (v1 > v2 && v2 > v3) // 3 2 1 -> sa + rra
+    {
+        sa(stack_a);
+        rra(stack_a);
+    }
+    else if (v1 > v2 && v2 < v3 && v1 > v3) // 3 1 2 -> ra
+        ra(stack_a);
+    else if (v1 < v2 && v2 > v3 && v1 < v3) // 1 3 2 -> sa + ra
+    {
+        sa(stack_a);
+        ra(stack_a);
+    }
+    else if (v1 < v2 && v2 > v3 && v1 > v3) // 2 3 1 -> rra
+        rra(stack_a);
+}
+
+void sort_five(t_stack *stack_a, t_stack *stack_b)
+{
+	int smallest;
+
+	while (stack_a->size > 3)
+	{
+		smallest = get_smallest(stack_a);
+		while (stack_a->top->value != smallest)
+		{
+			if (get_position(stack_a, smallest) < stack_a->size / 2)
+				ra(stack_a);
+			else
+				rra(stack_a);
+		}
+		pb(stack_a, stack_b);
+	}
+	sort_three(stack_a);
+	while (stack_b->size > 0)
+		pa(stack_b, stack_a);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:23:40 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:02:20 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+#include <stdlib.h>
+
+t_stack	*init_stack(void)
+{
+	t_stack *stack;
+
+	stack = malloc(sizeof(t_stack));
+	if (!stack)
+		return (NULL);
+	stack->top = NULL;
+	stack->bottom = NULL;
+	stack->size = 0;
+	return (stack);
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node *current_node;
+	t_node *next_node;
+
+	if (!stack)
+		return;
+	current_node = stack->top;
+	while (current_node)
+	{
+		next_node = current_node->next;
+		free(current_node);
+		current_node = next_node;
+	}
+	free(stack);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:23:57 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:04:53 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* stack_utils.c */
+#include "push_swap.h"
+#include <stdlib.h>
+
+void push_bottom(t_stack *stack, int value)
+{
+	t_node *new_node;
+
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return;
+	new_node->value = value;
+	new_node->next = NULL;
+	new_node->prev = stack->bottom;
+	if (stack->bottom)
+		stack->bottom->next = new_node;
+	else
+		stack->top = new_node;
+	stack->bottom = new_node;
+	stack->size++;
+}
+
+int get_smallest(t_stack *stack)
+{
+	t_node *current_node;
+	int smallest_value;
+
+	if (!stack || stack->size == 0)
+		return (0);
+	current_node = stack->top;
+	smallest_value = current_node->value;
+	while (current_node)
+	{
+		if (current_node->value < smallest_value)
+			smallest_value = current_node->value;
+		current_node = current_node->next;
+	}
+	return (smallest_value);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/09 21:28:27 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 17:05:13 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* utils.c */
+#include "push_swap.h"
+#include <stdlib.h>
+
+int	is_sorted(t_stack *stack)
+{
+	t_node *current_node;
+
+	if (!stack || stack->size < 2)
+		return (1);
+	current_node = stack->top;
+	while (current_node->next)
+	{
+		if (current_node->value > current_node->next->value)
+			return (0);
+		current_node = current_node->next;
+	}
+	return (1);
+}
+
+void	ft_free_split(char **arr)
+{
+	int i;
+
+	if (!arr)
+		return;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}

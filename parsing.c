@@ -6,50 +6,85 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:30:04 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/12 12:53:44 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:54:55 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* parsing.c */
 #include "push_swap.h"
 
-// Validate and convert a string to an integer
-// Kept non-static because it might be useful in other parsing contexts.
-int	ft_atoi_safe(const char *input, int *output)
-{
-	long	result = 0;
-	int		sign = 1;
+#include <stdio.h> // Include for debugging
 
+static int	ft_atoi_safe(const char *input, int *output)
+{
+	long	result;
+	int		sign;
+
+	// Skip leading spaces
+	while (*input == ' ' || *input == '\t' || *input == '\n' ||
+		   *input == '\v' || *input == '\f' || *input == '\r')
+		input++;
+
+	result = 0;
+	sign = 1;
+
+	// Handle sign
 	if (*input == '-' || *input == '+')
 	{
 		if (*input == '-')
 			sign = -1;
 		input++;
 	}
-	if (!*input) // Ensure there's at least one digit
+
+	// Check if the input is empty after handling spaces and signs
+	if (!*input)
+	{
+		fprintf(stderr, "Error: Input is empty or invalid\n");
 		return (0);
+	}
+
+	// Process the number
 	while (*input)
 	{
-		if (!ft_isdigit(*input))
+		if (!ft_isdigit(*input)) // Validate character is a digit
+		{
+			fprintf(stderr, "Error: Non-numeric character encountered\n");
 			return (0);
+		}
+
 		result = result * 10 + (*input - '0');
+
+		// Check for overflow or underflow
 		if ((result * sign) > 2147483647 || (result * sign) < -2147483648)
-			return (0); // Overflow or underflow
+		{
+			fprintf(stderr, "Error: Integer overflow or underflow\n");
+			return (0);
+		}
+
 		input++;
 	}
+
 	*output = (int)(result * sign);
 	return (1);
 }
 
-// Check for duplicate values in the stack
-// Kept static because duplicates are specific to parsing the stack.
 static int	has_duplicates(t_stack *stack)
 {
-	int		hash_table[2000001] = {0};
-	t_node	*current_node = stack->top;
+	int		hash_table[2000001];
+	int		index;
+	t_node	*current_node;
+	int		i;
 
+	i = 0;
+	while (i < 2000001)
+	{
+		hash_table[i] = 0;
+		i++;
+	}
+	current_node = stack->top;
 	while (current_node)
 	{
-		int index = current_node->value + 1000000; // Map [-1M, 1M] to [0, 2M]
+		index = current_node->value + 1000000;
 		if (hash_table[index] != 0)
 			return (1);
 		hash_table[index] = 1;
@@ -58,55 +93,64 @@ static int	has_duplicates(t_stack *stack)
 	return (0);
 }
 
-// Populate the stack with integers from a string array
-// Kept static because it is specific to this parsing logic.
-static int populate_stack(t_stack *stack, char **string_values)
+static int	populate_stack(t_stack *stack, char **string_values)
 {
-    int current_value;
-    int i = 0;
+	int current_value;
+	int i;
 
-    while (string_values[i])
-    {
-        if (!ft_atoi_safe(string_values[i], &current_value))
-            return 0; // Failed to convert value
-        push_bottom(stack, current_value); // Push value to stack
-        i++;
-    }
-    return 1; // Successfully populated stack
+	i = 0;
+	while (string_values[i])
+	{
+		// Validate and convert the current string to an integer
+		if (!ft_atoi_safe(string_values[i], &current_value))
+		{
+			ft_putstr_fd("Error: Invalid number\n", 2);
+			free_stack(stack); // Free the partially filled stack
+			return (0);
+		}
+
+		// Add the validated number to the stack
+		push_bottom(stack, current_value);
+		i++;
+	}
+
+	return (1);
 }
 
-// Parse arguments into a stack
-// Handles both space-separated strings and multiple arguments
+
 t_stack	*parse_arguments(int argc, char **argv)
 {
 	t_stack	*stack;
 	char	**values;
 
+	// Check if there are enough arguments
 	if (argc < 2)
+	{
+		ft_putstr_fd("Error\n", 2);
 		return (NULL);
+	}
 
-	// Initialize the stack
 	stack = init_stack();
 	if (!stack)
 		return (NULL);
 
-	// Handle space-separated input or regular argument list
+	// Handle single string input (e.g., "./push_swap '1 2 3'")
 	if (argc == 2)
 		values = ft_split(argv[1], ' ');
 	else
 		values = &argv[1];
 
-	// Populate the stack and handle errors
+	// Validate and populate the stack
 	if ((argc == 2 && !values) || !populate_stack(stack, values))
 	{
 		if (argc == 2)
-			ft_free_split(values);
+			ft_free_split(values); // Free split result if it was allocated
 		free_stack(stack);
 		ft_putstr_fd("Error\n", 2);
 		return (NULL);
 	}
 
-	// Free split array if used
+	// Free split result if it was allocated
 	if (argc == 2)
 		ft_free_split(values);
 
@@ -120,3 +164,4 @@ t_stack	*parse_arguments(int argc, char **argv)
 
 	return (stack);
 }
+

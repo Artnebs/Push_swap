@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 21:06:20 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/12 16:25:24 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/12 20:23:17 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # include "Libft_GNL_Printf/includes/ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
-
-/* ************************************************************************** */
-/*                                Structures                                  */
-/* ************************************************************************** */
+# include <stdio.h>
 
 typedef struct s_node
 {
@@ -36,38 +33,23 @@ typedef struct s_stack
 	int		size;
 }	t_stack;
 
-/* ************************************************************************** */
-/*                           Main function                           */
-/* ************************************************************************** */
+/* Main */
+void	push_swap(t_stack *stack_a, t_stack *stack_b);
 
-void push_swap(t_stack *stack_a, t_stack *stack_b);
-
-/* ************************************************************************** */
-/*                           Initialization & Free                           */
-/* ************************************************************************** */
-
+/* Initialization & Free */
 t_stack	*init_stack(void);
 void	free_stack(t_stack *stack);
 
-/* ************************************************************************** */
-/*                                Parsing                                     */
-/* ************************************************************************** */
-
+/* Parsing */
 t_stack	*parse_arguments(int ac, char **av);
 
-/* ************************************************************************** */
-/*                             Core Operations                               */
-/* ************************************************************************** */
-
+/* Core Operations */
 void	swap(t_stack *stack);
 void	push(t_stack *src, t_stack *dest);
 void	rotate(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 
-/* ************************************************************************** */
-/*                           Actions (With Output)                           */
-/* ************************************************************************** */
-
+/* Actions */
 void	sa(t_stack *stack_a);
 void	sb(t_stack *stack_b);
 void	ss(t_stack *stack_a, t_stack *stack_b);
@@ -80,55 +62,33 @@ void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 
-/* ************************************************************************** */
-/*                             Stack Utilities                               */
-/* ************************************************************************** */
-
+/* Stack Utilities */
 int		is_sorted(t_stack *stack);
 int		get_smallest(t_stack *stack);
 int		get_position(t_stack *stack, int value);
 void	push_bottom(t_stack *stack, int value);
 
-/* ************************************************************************** */
-/*                         Sorting Small Stacks                              */
-/* ************************************************************************** */
-
+/* Sorting Small Stacks */
 void	sort_three(t_stack *stack_a);
 void	sort_five(t_stack *stack_a, t_stack *stack_b);
 
-/* ************************************************************************** */
-/*                     Median-Based Sorting Utilities                        */
-/* ************************************************************************** */
-
-void	quick_median_sort(t_stack *stack_a, t_stack *stack_b);
-void quick_sort(int *arr, int low, int high);
-void	partition_stack(t_stack *stack_a, t_stack *stack_b, int median, int size);
+/* Median Sort */
 int		find_median(t_stack *stack);
+void	quick_median_sort(t_stack *stack_a, t_stack *stack_b);
+int find_median_for_chunk(t_stack *stack, int median, int is_upper);
 
-/* ************************************************************************** */
-/*                     Cost-Based Move Utilities                             */
-/* ************************************************************************** */
+/* Partition */
+void partition_stack(t_stack *stack_a, t_stack *stack_b, int size);
 
-void	merge_stacks(t_stack *stack_a, t_stack *stack_b);
+/* Cost Moves */
 void	move_with_min_cost(t_stack *stack_a, t_stack *stack_b, int target_value);
 
-/* ************************************************************************** */
-/*                    Insert Position & Rotation Utils                       */
-/* ************************************************************************** */
-
+/* Insert Position & Rotations */
 int		get_insert_position(t_stack *stack, int value);
-t_node *get_node_at_position(t_stack *stack, int position);
 int		calc_rotations_for_a(t_stack *stack_a, int position);
 int		calc_rotations_for_b(t_stack *stack_b, int position);
 
-/* ************************************************************************** */
-/*                                 Helpers                                   */
-/* ************************************************************************** */
-
+/* Helpers */
 void	ft_free_split(char **array);
-void print_stack_state(const char *msg, t_stack *stack_a, t_stack *stack_b);
-int binary_search(t_stack *a, int target_value);
-void print_debug_state(const char *msg, t_stack *stack);
-
 
 #endif

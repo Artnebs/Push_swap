@@ -1,0 +1,8 @@
+checker_linux
+main.checker_linux
+operations.txt
+test_actions
+test_stack_utils
+test_push_swap.sh
+test_find_median_for_chunk.c
+test_median

@@ -1,7 +1,69 @@
-#include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 17:40:00 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/12 19:55:46 by anebbou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "push_swap.h"
+
+
+
+int main(int argc, char **argv)
+{
+    if (argc < 2)
+    return (EXIT_SUCCESS); // Exit silently for empty input
+
+    t_stack *stack_a;
+    t_stack *stack_b;
+
+    // Parse arguments to initialize stack_a
+    stack_a = parse_arguments(argc, argv);
+    if (!stack_a)
+    {
+        ft_putstr_fd("Error\n", 2);
+        return (EXIT_FAILURE);
+    }
+
+    // Initialize stack_b
+    stack_b = init_stack();
+    if (!stack_b)
+    {
+        free_stack(stack_a);
+        ft_putstr_fd("Error\n", 2);
+        return (EXIT_FAILURE);
+    }
+
+    // Check if stack_a is already sorted
+    if (is_sorted(stack_a))
+    {
+        free_stack(stack_a);
+        free_stack(stack_b);
+        return (EXIT_SUCCESS);
+    }
+
+    // Perform sorting based on stack size
+    if (stack_a->size <= 3)
+        sort_three(stack_a);
+    else if (stack_a->size <= 5)
+        sort_five(stack_a, stack_b);
+    else
+    {
+        quick_median_sort(stack_a, stack_b);
+        while (stack_b->size > 0)
+            move_with_min_cost(stack_a, stack_b, stack_b->top->value);
+    }
+
+    // Free resources
+    free_stack(stack_a);
+    free_stack(stack_b);
+    return (EXIT_SUCCESS);
+}
 
 // Prints the state of the stacks (minimal debug version)
 void print_stack_state(const char *msg, t_stack *stack_a, t_stack *stack_b)
@@ -35,7 +97,7 @@ void print_stack_state(const char *msg, t_stack *stack_a, t_stack *stack_b)
     else
         printf("Stack B: NULL\n");
 }
-
+/*
 int main(void)
 {
     t_stack *stack_a = init_stack();
@@ -68,7 +130,6 @@ int main(void)
 }
 
 
-/*
 // Prints the state of the stacks (minimal debug version)
 void print_stack_state(const char *msg, t_stack *stack_a, t_stack *stack_b)
 {
