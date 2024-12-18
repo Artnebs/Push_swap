@@ -5,56 +5,108 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 19:40:09 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/16 19:51:33 by anebbou          ###   ########.fr       */
+/*   Created: 2024/12/16 19:51:33 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/18 12:36:04 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(t_stack*a)
+/* Sort a stack of three elements */
+void	sort_three(t_stack *stack_a)
 {
-	int v1;int v2;int v3;
-	if(!a||a->size<2)return;
-	if(a->size==2&&a->top->value>a->top->next->value)sa(a);
-	if(a->size==3)
+	int	top_value;
+	int	middle_value;
+	int	bottom_value;
+
+	if (!stack_a || stack_a->size < 2)
+		return ;
+	if (stack_a->size == 2 && stack_a->top->value > stack_a->top->next->value)
+		sa(stack_a);
+	if (stack_a->size == 3)
 	{
-		v1=a->top->value;v2=a->top->next->value;v3=a->bottom->value;
-		if(v1>v2&&v2<v3&&v1<v3)sa(a);
-		else if(v1>v2&&v2>v3){sa(a);rra(a);}
-		else if(v1>v2&&v2<v3&&v1>v3)ra(a);
-		else if(v1<v2&&v2>v3&&v1<v3){sa(a);ra(a);}
-		else if(v1<v2&&v2>v3&&v1>v3)rra(a);
+		top_value = stack_a->top->value;
+		middle_value = stack_a->top->next->value;
+		bottom_value = stack_a->bottom->value;
+		if (top_value > middle_value && middle_value < bottom_value && top_value < bottom_value)
+			sa(stack_a);
+		else if (top_value > middle_value && middle_value > bottom_value)
+		{
+			sa(stack_a);
+			rra(stack_a);
+		}
+		else if (top_value > middle_value && middle_value < bottom_value && top_value > bottom_value)
+			ra(stack_a);
+		else if (top_value < middle_value && middle_value > bottom_value && top_value < bottom_value)
+		{
+			sa(stack_a);
+			ra(stack_a);
+		}
+		else if (top_value < middle_value && middle_value > bottom_value && top_value > bottom_value)
+			rra(stack_a);
 	}
 }
 
-static int get_smallest(t_stack*stack)
+/* Get the smallest value in the stack */
+static int	get_smallest(t_stack *stack)
 {
-	t_node*c;int min;
-	c=stack->top;min=c->value;
-	while(c){if(c->value<min)min=c->value;c=c->next;}
-	return(min);
-}
+	t_node	*current_node;
+	int		smallest;
 
-static int get_position(t_stack*stack,int val)
-{
-	t_node*c;int p;
-	p=0;c=stack->top;
-	while(c){if(c->value==val)return(p);p++;c=c->next;}
-	return(p);
-}
-
-void	sort_five(t_stack*a,t_stack*b)
-{
-	int sm;int pos;
-	while(a->size>3)
+	if (!stack || stack->size == 0)
+		return (0); // Handle appropriately if empty
+	current_node = stack->top;
+	smallest = current_node->value;
+	while (current_node)
 	{
-		sm=get_smallest(a);
-		pos=get_position(a,sm);
-		while(pos>0&&pos<=a->size/2){ra(a);pos=get_position(a,sm);}
-		while(pos>a->size/2){rra(a);pos=get_position(a,sm);}
-		pb(a,b);
+		if (current_node->value < smallest)
+			smallest = current_node->value;
+		current_node = current_node->next;
 	}
-	sort_three(a);
-	while(b->size>0)pa(b,a);
+	return (smallest);
+}
+
+/* Get the position of a specific value in the stack */
+static int	get_position(t_stack *stack, int value)
+{
+	t_node	*current_node;
+	int		position;
+
+	current_node = stack->top;
+	position = 0;
+	while (current_node)
+	{
+		if (current_node->value == value)
+			return (position);
+		position++;
+		current_node = current_node->next;
+	}
+	return (-1);
+}
+
+/* Sort a stack of five elements */
+void	sort_five(t_stack *stack_a, t_stack *stack_b)
+{
+	int	smallest_value;
+	int	position;
+
+	while (stack_a->size > 3)
+	{
+		smallest_value = get_smallest(stack_a);
+		position = get_position(stack_a, smallest_value);
+		while (position > 0 && position <= stack_a->size / 2)
+		{
+			ra(stack_a);
+			position = get_position(stack_a, smallest_value);
+		}
+		while (position > stack_a->size / 2)
+		{
+			rra(stack_a);
+			position = get_position(stack_a, smallest_value);
+		}
+		pb(stack_a, stack_b);
+	}
+	sort_three(stack_a);
+	while (stack_b->size > 0)
+		pa(stack_b, stack_a);
 }

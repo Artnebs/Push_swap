@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 19:48:36 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/16 20:26:33 by anebbou          ###   ########.fr       */
+/*   Created: 2024/12/16 20:26:33 by anebbou           #+#    #+#             */
+/*   Updated: 2024/12/18 12:42:06 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,31 @@
 # include <stdlib.h>
 # include <limits.h>
 
+/* Node Structure */
 typedef struct s_node {
-	int value;
-	struct s_node *prev;
-	struct s_node *next;
-} t_node;
+	int				value;
+	struct s_node	*prev;
+	struct s_node	*next;
+}	t_node;
 
+/* Stack Structure */
 typedef struct s_stack {
-	t_node *top;
-	t_node *bottom;
-	int size;
-} t_stack;
+	t_node	*top;
+	t_node	*bottom;
+	int		size;
+}	t_stack;
 
-/* Main */
-int	main(int ac, char **av);
+/* Main Functions */
+int		main(int argc, char **argv);
 void	push_swap(t_stack *stack_a, t_stack *stack_b);
 
-/* Initialization & Free */
+/* Initialization & Cleanup */
 t_stack	*init_stack(void);
 void	free_stack(t_stack *stack);
 int		push_bottom(t_stack *stack, int value);
 
 /* Parsing */
-int		*parse_arguments(int ac, char **av, int *count);
+int		*parse_arguments(int argc, char **argv, int *count);
 
 /* Core Operations */
 void	swap(t_stack *stack);
@@ -61,26 +63,26 @@ void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 
-/* Helpers */
+/* Utility Functions */
 int		is_sorted(t_stack *stack);
-void	ft_free_split(char **array); // provided by libft
+void	ft_free_split(char **array); // Provided by libft
 
-/* Sorting Small Stacks */
+/* Small Stack Sorting */
 void	sort_three(t_stack *stack_a);
 void	sort_five(t_stack *stack_a, t_stack *stack_b);
 
 /* Ranking */
-int		*rank_array(int *arr, int size);
+int		*rank_array(int *array, int size);
 
-/* Rotations Calc */
+/* Rotation Calculations */
 int		get_insert_position(t_stack *stack, int value);
-int		calc_rotations_for_a(t_stack *a, int position);
-int		calc_rotations_for_b(t_stack *b, int position);
+int		calc_rotations_for_a(t_stack *stack_a, int position);
+int		calc_rotations_for_b(t_stack *stack_b, int position);
 
 /* Cost Moves */
-void	move_with_min_cost(t_stack *a, t_stack *b, int target_value);
+void	move_with_min_cost(t_stack *stack_a, t_stack *stack_b, int target_value);
 
-/* debug */
-void	print_stack(const char *name, t_stack *s);
+/* Debugging */
+void	print_stack(const char *name, t_stack *stack);
 
 #endif
