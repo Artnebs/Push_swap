@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:26:33 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/21 16:44:21 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/21 19:41:14 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	ft_free_split(char **array); // Provided by libft
 /* Small Stack Sorting */
 void	sort_three(t_stack *stack_a);
 void	sort_five(t_stack *stack_a, t_stack *stack_b);
+
+void sort_large(t_stack *stack_a, t_stack *stack_b);
 
 /* Ranking */
 int		*rank_array(int *array, int size);
