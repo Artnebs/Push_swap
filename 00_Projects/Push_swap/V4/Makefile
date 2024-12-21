@@ -6,7 +6,7 @@
 #    By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/04 10:28:35 by anebbou           #+#    #+#              #
-#    Updated: 2024/12/18 12:42:55 by anebbou          ###   ########.fr        #
+#    Updated: 2024/12/21 16:58:00 by anebbou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,19 @@ LIBFT_REPO = https://github.com/Artnebs/Libft_GNL_Printf.git
 
 # Source Files
 SRCS = main.c \
-	   push_swap.c \
-	   parsing.c \
-	   stack_init.c \
-	   operations.c \
-	   actions.c \
-	   actions2.c \
-	   actions3.c \
-	   sorting_small.c \
-	   ranking.c \
-	   rotations_calc.c \
-	   cost_moves.c \
-	   utils.c
+       push_swap.c \
+       parsing.c \
+       stack_init.c \
+       operations.c \
+       actions.c \
+       actions2.c \
+       actions3.c \
+       sorting_small.c \
+       sorting_large.c \
+       ranking.c \
+       rotations_calc.c \
+       cost_moves.c \
+       utils.c
 OBJS = $(SRCS:.c=.o)
 
 # Compiler and Flags

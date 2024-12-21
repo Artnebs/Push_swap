@@ -1,0 +1,9 @@
+checker_linux 
+push_swap_100_additional_tests.log
+push_swap_500_additional_tests.log
+push_swap_large_tests.log
+push_swap_output.log
+push_swap_small_tests.log
+test_push_swap_100.sh
+test_push_swap_500.sh
+test_push_swap.sh

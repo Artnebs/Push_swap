@@ -6,7 +6,7 @@
 /*   By: anebbou <anebbou@student42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 20:26:33 by anebbou           #+#    #+#             */
-/*   Updated: 2024/12/18 12:42:06 by anebbou          ###   ########.fr       */
+/*   Updated: 2024/12/21 16:44:21 by anebbou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ void	sort_five(t_stack *stack_a, t_stack *stack_b);
 
 /* Ranking */
 int		*rank_array(int *array, int size);
+int stack_size(t_stack *stack);
+int stack_max_value(t_stack *stack);
+int stack_top_value(t_stack *stack);
 
 /* Rotation Calculations */
 int		get_insert_position(t_stack *stack, int value);
